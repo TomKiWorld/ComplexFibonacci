@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t tomkiworld/complex-fibonacci-test -f ./client/Dockerfile.dev ./client/Dockerfile.dev
+
+script:
+  - docker run -e CI=true tomkiworld/complex-fibonacci-test npm test
+
+after_success:
+  - docker build -t tomkiworld/complex-fibonacci-client ./client
+  - docker build -t tomkiworld/complex-fibonacci-api ./api
+  - docker build -t tomkiworld/complex-fibonacci-nginx ./nginx
+  - docker build -t tomkiworld/complex-fibonacci-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to doker hub
+  - docker push tomkiworld/complex-fibonacci-client
+  - docker push tomkiworld/complex-fibonacci-api
+  - docker push tomkiworld/complex-fibonacci-nginx
+  - docker push tomkiworld/complex-fibonacci-worker
