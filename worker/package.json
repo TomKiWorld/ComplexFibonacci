@@ -1,0 +1,14 @@
+{
+  "name": "complex-fibonacci-worker",
+  "author": "TomKiWorld",
+  "description": "Worker for the ComplexFibonacci Project",
+  "private": true,
+  "dependencies": {
+    "nodemon": "2.0.6",
+    "redis": "3.0.2"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon"
+  }
+}
